@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-cloudflare-core-schema
+      author: codex
+      preConditions:
+        - onFail: HALT
+        - dbms:
+            type: mysql
+      changes:
+        - sqlFile:
+            path: ../../sql/v1.0.0/001-cloudflare-core-schema.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true

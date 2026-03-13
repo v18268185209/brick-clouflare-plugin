@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <changeSet id="cf-schema-account" author="cloudflare-plugin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="cf_account"/>
+            </not>
+        </preConditions>
+        <createTable tableName="cf_account">
+            <column name="id" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="display_name" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="auth_type" type="VARCHAR(32)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="api_token_enc" type="TEXT"/>
+            <column name="api_key_enc" type="TEXT"/>
+            <column name="api_email_enc" type="TEXT"/>
+            <column name="cloudflare_account_id" type="VARCHAR(128)"/>
+            <column name="default_zone_id" type="VARCHAR(128)"/>
+            <column name="enabled" type="INTEGER" defaultValueNumeric="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="remark" type="VARCHAR(512)"/>
+            <column name="created_at" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="cf-schema-operation-log" author="cloudflare-plugin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="cf_operation_log"/>
+            </not>
+        </preConditions>
+        <createTable tableName="cf_operation_log">
+            <column name="id" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="account_id" type="BIGINT"/>
+            <column name="module" type="VARCHAR(64)"/>
+            <column name="action" type="VARCHAR(64)"/>
+            <column name="endpoint" type="TEXT"/>
+            <column name="request_body" type="TEXT"/>
+            <column name="response_code" type="INTEGER"/>
+            <column name="success" type="INTEGER" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message" type="TEXT"/>
+            <column name="created_at" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="cf-schema-operation-log-index-account" author="cloudflare-plugin">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="cf_operation_log"/>
+            <not>
+                <indexExists tableName="cf_operation_log" indexName="idx_cf_operation_log_account_id"/>
+            </not>
+        </preConditions>
+        <createIndex indexName="idx_cf_operation_log_account_id" tableName="cf_operation_log">
+            <column name="account_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="cf-schema-operation-log-index-created-at" author="cloudflare-plugin">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="cf_operation_log"/>
+            <not>
+                <indexExists tableName="cf_operation_log" indexName="idx_cf_operation_log_created_at"/>
+            </not>
+        </preConditions>
+        <createIndex indexName="idx_cf_operation_log_created_at" tableName="cf_operation_log">
+            <column name="created_at"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="cf-schema-plugin-market-provider-config" author="cloudflare-plugin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="cf_pm_provider_config"/>
+            </not>
+        </preConditions>
+        <createTable tableName="cf_pm_provider_config">
+            <column name="id" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="provider_code" type="VARCHAR(64)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="base_url" type="VARCHAR(512)"/>
+            <column name="admin_username" type="VARCHAR(128)"/>
+            <column name="admin_password_enc" type="TEXT"/>
+            <column name="enabled" type="INTEGER" defaultValueNumeric="1">
+                <constraints nullable="false"/>
+            </column>
+            <column name="extra_json" type="TEXT"/>
+            <column name="created_at" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="cf-schema-plugin-market-operation-log" author="cloudflare-plugin">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="cf_pm_operation_log"/>
+            </not>
+        </preConditions>
+        <createTable tableName="cf_pm_operation_log">
+            <column name="id" type="INTEGER" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="operator_name" type="VARCHAR(128)"/>
+            <column name="action" type="VARCHAR(128)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="target" type="VARCHAR(256)"/>
+            <column name="request_body" type="TEXT"/>
+            <column name="success" type="INTEGER" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="message" type="TEXT"/>
+            <column name="created_at" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="cf-schema-plugin-market-operation-log-index-created-at" author="cloudflare-plugin">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="cf_pm_operation_log"/>
+            <not>
+                <indexExists tableName="cf_pm_operation_log" indexName="idx_cf_pm_operation_log_created_at"/>
+            </not>
+        </preConditions>
+        <createIndex indexName="idx_cf_pm_operation_log_created_at" tableName="cf_pm_operation_log">
+            <column name="created_at"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

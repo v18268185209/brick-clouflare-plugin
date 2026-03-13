@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-cloudflare-api-bindings
+      author: codex
+      preConditions:
+        - onFail: MARK_RAN
+        - dbms:
+            type: mysql
+        - tableExists:
+            tableName: qixiaozhu_perms
+        - tableExists:
+            tableName: qixiaozhu_menu_api_bind
+      changes:
+        - sqlFile:
+            path: ../../sql/v1.0.0/003-cloudflare-api-bindings.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true

@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-cloudflare-menu-permissions
+      author: codex
+      preConditions:
+        - onFail: MARK_RAN
+        - dbms:
+            type: mysql
+        - tableExists:
+            tableName: qixiaozhu_menu
+        - tableExists:
+            tableName: qixiaozhu_perms
+      changes:
+        - sqlFile:
+            path: ../../sql/v1.0.0/002-cloudflare-menu-permissions.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true

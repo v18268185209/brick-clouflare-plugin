@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.24.xsd">
+
+    <changeSet id="seed-cloudflare-menu-permissions" author="cloudflare-plugin" runOnChange="false">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="qixiaozhu_menu"/>
+            <tableExists tableName="qixiaozhu_perms"/>
+            <tableExists tableName="qixiaozhu_role"/>
+            <tableExists tableName="qixiaozhu_role_perms"/>
+        </preConditions>
+
+        <sqlFile
+            path="../sql/cloudflare-menu-permissions.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            endDelimiter=";"
+            stripComments="false"/>
+    </changeSet>
+
+    <changeSet id="seed-cloudflare-api-permissions-v2" author="cloudflare-plugin" runOnChange="false">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="qixiaozhu_perms"/>
+            <tableExists tableName="qixiaozhu_role"/>
+            <tableExists tableName="qixiaozhu_role_perms"/>
+        </preConditions>
+
+        <sqlFile
+            path="../sql/cloudflare-api-permissions-v2.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            endDelimiter=";"
+            stripComments="false"/>
+    </changeSet>
+
+    <changeSet id="seed-cloudflare-button-permissions-v3" author="cloudflare-plugin" runOnChange="false">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="qixiaozhu_perms"/>
+            <tableExists tableName="qixiaozhu_role"/>
+            <tableExists tableName="qixiaozhu_role_perms"/>
+        </preConditions>
+
+        <sqlFile
+            path="../sql/cloudflare-button-permissions-v3.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            endDelimiter=";"
+            stripComments="false"/>
+    </changeSet>
+
+    <changeSet id="seed-cloudflare-plugin-market-menu-permissions" author="cloudflare-plugin" runOnChange="false">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="qixiaozhu_menu"/>
+            <tableExists tableName="qixiaozhu_perms"/>
+            <tableExists tableName="qixiaozhu_role"/>
+            <tableExists tableName="qixiaozhu_role_perms"/>
+        </preConditions>
+
+        <sqlFile
+            path="../sql/cloudflare-plugin-market-menu-permissions.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            endDelimiter=";"
+            stripComments="false"/>
+    </changeSet>
+
+    <changeSet id="seed-cloudflare-plugin-market-api-permissions" author="cloudflare-plugin" runOnChange="false">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="qixiaozhu_perms"/>
+            <tableExists tableName="qixiaozhu_role"/>
+            <tableExists tableName="qixiaozhu_role_perms"/>
+        </preConditions>
+
+        <sqlFile
+            path="../sql/cloudflare-plugin-market-api-permissions.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            endDelimiter=";"
+            stripComments="false"/>
+    </changeSet>
+
+    <changeSet id="seed-cloudflare-plugin-market-button-permissions" author="cloudflare-plugin" runOnChange="false">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="qixiaozhu_perms"/>
+            <tableExists tableName="qixiaozhu_role"/>
+            <tableExists tableName="qixiaozhu_role_perms"/>
+        </preConditions>
+
+        <sqlFile
+            path="../sql/cloudflare-plugin-market-button-permissions.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            endDelimiter=";"
+            stripComments="false"/>
+    </changeSet>
+
+    <changeSet id="seed-cloudflare-worker-admin-menu-permissions" author="cloudflare-plugin" runOnChange="false">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="qixiaozhu_menu"/>
+            <tableExists tableName="qixiaozhu_perms"/>
+            <tableExists tableName="qixiaozhu_role"/>
+            <tableExists tableName="qixiaozhu_role_perms"/>
+        </preConditions>
+
+        <sqlFile
+            path="../sql/cloudflare-worker-admin-menu-permissions.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            endDelimiter=";"
+            stripComments="false"/>
+    </changeSet>
+
+    <changeSet id="seed-cloudflare-worker-admin-api-permissions" author="cloudflare-plugin" runOnChange="false">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="qixiaozhu_perms"/>
+            <tableExists tableName="qixiaozhu_role"/>
+            <tableExists tableName="qixiaozhu_role_perms"/>
+        </preConditions>
+
+        <sqlFile
+            path="../sql/cloudflare-worker-admin-api-permissions.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            endDelimiter=";"
+            stripComments="false"/>
+    </changeSet>
+
+    <changeSet id="seed-cloudflare-worker-admin-button-permissions" author="cloudflare-plugin" runOnChange="false">
+        <preConditions onFail="MARK_RAN">
+            <tableExists tableName="qixiaozhu_perms"/>
+            <tableExists tableName="qixiaozhu_role"/>
+            <tableExists tableName="qixiaozhu_role_perms"/>
+        </preConditions>
+
+        <sqlFile
+            path="../sql/cloudflare-worker-admin-button-permissions.sql"
+            relativeToChangelogFile="true"
+            splitStatements="true"
+            endDelimiter=";"
+            stripComments="false"/>
+    </changeSet>
+
+</databaseChangeLog>

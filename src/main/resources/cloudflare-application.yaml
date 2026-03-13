@@ -1,0 +1,81 @@
+plugin:
+  resources:
+    static-locations: classpath:/static/
+
+spring:
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+  sql:
+    init:
+      mode: never
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      write-dates-as-timestamps: false
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  global-config:
+    banner: false
+  configuration:
+    map-underscore-to-camel-case: true
+
+cloudflare:
+  plugin:
+    runtime-mode: embedded-shared
+    db-type: mysql
+    host-data-source-bean-name: mainDataSource
+    api-base-url: https://api.cloudflare.com/client/v4
+    connect-timeout-ms: 10000
+    read-timeout-ms: 20000
+    max-retries: 2
+    retry-backoff-ms: 400
+    encryption-key: ${CLOUDFLARE_PLUGIN_SECRET:change-this-32-byte-cloudflare-key!}
+    datasource:
+      url: ${CLOUDFLARE_PLUGIN_DB_URL:}
+      username: ${CLOUDFLARE_PLUGIN_DB_USERNAME:}
+      password: ${CLOUDFLARE_PLUGIN_DB_PASSWORD:}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      maximum-pool-size: 10
+      minimum-idle: 1
+      connection-timeout-ms: 30000
+    host-datasource:
+      url: ${CLOUDFLARE_PLUGIN_HOST_DB_URL:${spring.datasource.url:${EQADMIN_MYSQL_URL:jdbc:mysql://127.0.0.1:3306/eqadmin?useSSL=false&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull}}}
+      username: ${CLOUDFLARE_PLUGIN_HOST_DB_USERNAME:${spring.datasource.username:${EQADMIN_MYSQL_USERNAME:root}}}
+      password: ${CLOUDFLARE_PLUGIN_HOST_DB_PASSWORD:${spring.datasource.password:${EQADMIN_MYSQL_PASSWORD:}}}
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      maximum-pool-size: 5
+      minimum-idle: 1
+      connection-timeout-ms: 30000
+    market:
+      enabled: true
+      signature-enabled: true
+      base-url: ${CLOUDFLARE_PLUGIN_MARKET_BASE_URL:}
+      access-key: ${CLOUDFLARE_PLUGIN_MARKET_ACCESS_KEY:}
+      access-secret: ${CLOUDFLARE_PLUGIN_MARKET_ACCESS_SECRET:}
+      admin-username: ${CLOUDFLARE_PLUGIN_MARKET_ADMIN_USERNAME:}
+      admin-password: ${CLOUDFLARE_PLUGIN_MARKET_ADMIN_PASSWORD:}
+      session-renew-before-ms: 300000
+
+eqadmin:
+  cloudflare:
+    startup:
+      enabled: true
+      fail-fast: true
+      static-sync-enabled: true
+      static-sync-required: false
+      static-classpath-root: eqadmin-cloudflare/web/childrens/cloudflare
+      target-child-dir-name: cloudflare
+      backup-dir-name: _backup
+      microapp-sync-enabled: true
+      microapp-enname: eqadminPluginsCloudflare
+      microapp-zhname: 边缘云平台
+      microapp-base-url: /childrens/cloudflare
+      microapp-timeout: 500
+      microapp-iframe: 0
+      microapp-container: MICROAPP-DIV-ID
+      microapp-status: 1
+      microapp-schem: ""
+      microapp-create-user-id: 1

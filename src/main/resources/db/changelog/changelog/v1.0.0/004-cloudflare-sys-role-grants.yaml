@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-cloudflare-sys-role-grants
+      author: codex
+      preConditions:
+        - onFail: MARK_RAN
+        - dbms:
+            type: mysql
+        - tableExists:
+            tableName: qixiaozhu_role
+        - tableExists:
+            tableName: qixiaozhu_role_perms
+        - tableExists:
+            tableName: qixiaozhu_perms
+      changes:
+        - sqlFile:
+            path: ../../sql/v1.0.0/004-cloudflare-sys-role-grants.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true
