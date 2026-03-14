@@ -1,0 +1,10 @@
+databaseChangeLog:
+  - include:
+      file: changelog/v1.0.0/002-cloudflare-menu-permissions.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelog/v1.0.0/003-cloudflare-api-bindings.yaml
+      relativeToChangelogFile: true
+  - include:
+      file: changelog/v1.0.0/004-cloudflare-sys-role-grants.yaml
+      relativeToChangelogFile: true
